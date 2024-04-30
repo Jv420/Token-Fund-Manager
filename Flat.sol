@@ -873,12 +873,12 @@ function DistributeProfit( ) external  onlyOwner{
 
 
 //please specify amountOutMin reasonably
-function SwapTokens(address _RouterAddress, address FromTokenAddress,address ToTokenAddress,uint amountOutMin) external onlyOwner {
+function SwapTokens(address _RouterAddress, address FromTokenAddress,uint FromTokenAmountIn,address ToTokenAddress,uint amountOutMin) external onlyOwner {
         // Get the balance of FromToken
-        uint256 FromTokenBalance = IERC20(FromTokenAddress).balanceOf(address(this));
+        //uint FromTokenAmountIn = IERC20(FromTokenAddress).balanceOf(address(this));
 
         // Approve the Uniswap Router to spend TokenA
-        IERC20(FromTokenAddress).approve( _RouterAddress, FromTokenBalance);
+        IERC20(FromTokenAddress).approve( _RouterAddress, FromTokenAmountIn);
 
         // Define the path for the swap (TokenA to TokenB)
         address[] memory path = new address[](2);
@@ -890,7 +890,7 @@ function SwapTokens(address _RouterAddress, address FromTokenAddress,address ToT
 
         // Perform the swap
         Router.swapExactTokensForTokens(
-            FromTokenBalance,
+            FromTokenAmountIn,
             amountOutMin, // min amount of TokenB to receive (slippage tolerance)
             path,
             address(this),
