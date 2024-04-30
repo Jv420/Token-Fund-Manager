@@ -785,7 +785,7 @@ constructor(address _USD) ERC20("Fund", "FUND") {
 function depositUSDToken (uint256 amount) public noReentrant{
     // Increment the account balance for this address
     
-    require(amount > 0, "You need to sell at least some tokens");
+    require(amount > 0, "Deposit amount need >0");
     uint256 allowance = USDToken.allowance(msg.sender, address(this));
     require(allowance >= amount, "Check the token allowance");
 
